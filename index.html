@@ -369,6 +369,18 @@
   const OFF={1:0,3:.10,6:.15,12:.20};
   const money=n=>'$'+n.toLocaleString('en-US');
   const planBtns=document.querySelectorAll('.plans button');
+  // Hidden booking tags: shows which Book a Call button was clicked (visible on the booking in Calendly)
+  function tagLink(a,label){
+    if(!a) return;
+    const u=new URL(a.href.split('?')[0]);
+    u.searchParams.set('utm_source','website');
+    u.searchParams.set('utm_medium','book_call_button');
+    u.searchParams.set('utm_campaign',label);
+    a.href=u.toString();
+  }
+  tagLink(document.querySelector('nav a[href*="calendly"]'),'nav');
+  tagLink(document.querySelector('.hero a[href*="calendly"]'),'hero');
+  tagLink(document.querySelector('.final a[href*="calendly"]'),'final_cta');
   function setPlan(mo){
     planBtns.forEach(x=>x.classList.toggle('on',+x.dataset.months===mo));
     document.querySelectorAll('.tier').forEach(tier=>{
@@ -382,6 +394,7 @@
         billed.innerHTML=money(per*mo)+' for '+mo+' months<span class="saved">Save '+money((m-per)*mo)+'</span>';
       }
       if(up) up.hidden=(mo===1);
+      tagLink(tier.querySelector('a[href*="calendly"]'), tier.querySelector('h3').textContent.trim().toLowerCase()+'_'+(mo===1?'monthly':mo+'mo'));
     });
   }
   planBtns.forEach(b=>b.addEventListener('click',()=>setPlan(+b.dataset.months)));
