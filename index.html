@@ -144,6 +144,20 @@
   footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   footer a{color:var(--teal);font-weight:500}
   .disclaimer{font-size:12px;color:#8A989E;margin-top:8px;max-width:640px}
+
+  /* Package picker */
+  .plans{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:30px 0 8px}
+  .plans button{border:1.5px solid var(--line);background:#fff;font:inherit;font-size:14px;font-weight:600;color:var(--ink);padding:10px 18px;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:118px;transition:border-color .15s,background .15s}
+  .plans button:hover{border-color:var(--teal)}
+  .plans button .off{font-size:11.5px;font-weight:700;color:var(--emerald);background:var(--emerald-soft);padding:2px 8px;border-radius:999px}
+  .plans button .off.plain{background:transparent;color:var(--muted);font-weight:500}
+  .plans button.on{background:var(--teal);border-color:var(--teal);color:#fff}
+  .plans button.on .off{background:#fff;color:var(--teal)}
+  .plans button.on .off.plain{background:transparent;color:rgba(255,255,255,.8)}
+  .was{font-size:15px;color:var(--muted);text-decoration:line-through;font-weight:500;margin-right:6px}
+  .saved{display:inline-block;font-size:12px;font-weight:700;color:var(--emerald);background:var(--emerald-soft);border-radius:999px;padding:2px 9px;margin-left:6px}
+  .upgrade{font-size:13px;color:var(--teal);background:var(--bg-alt);border-radius:8px;padding:10px 12px;margin:-6px 0 18px}
+  @media(max-width:560px){.plans button{min-width:0;flex:1 1 40%}}
 </style>
 </head>
 <body>
@@ -240,19 +254,21 @@
   <div class="wrap center">
     <div class="eyebrow">Membership</div>
     <h2>Choose your level of support.</h2>
-    <p class="lead">Every plan starts with a free call. Pay monthly, or pay annually and get 2 months free.</p>
-    <div class="toggle" role="tablist">
-      <button class="on" data-mode="monthly">Monthly</button>
-      <button data-mode="annual">Annual</button>
+    <p class="lead">Every plan starts with a free call. Real change takes a few months to show up, so commit to a package and save up to 20%.</p>
+    <div class="plans" role="tablist">
+      <button data-months="1"><span>Monthly</span><span class="off plain">Standard rate</span></button>
+      <button data-months="3"><span>3 Months</span><span class="off">Save 10%</span></button>
+      <button data-months="6" class="on"><span>6 Months</span><span class="off">Save 15%</span></button>
+      <button data-months="12"><span>12 Months</span><span class="off">Save 20%</span></button>
     </div>
-    <div class="save-note" id="saveNote"></div>
 
     <div class="tiers">
-      <div class="tier">
+      <div class="tier" data-m="179">
         <h3>Toolkit</h3>
         <p class="for">A clear plan and steady accountability. No tracker needed.</p>
-        <div class="price" data-m="$179" data-a="$149">$179<small>/month</small></div>
-        <div class="billed" data-a="$1,790 billed yearly">&nbsp;</div>
+        <div class="price">$179<small>/month</small></div>
+        <div class="billed">Billed monthly</div>
+        <div class="upgrade" hidden>Want more support later? Upgrade to Apex anytime and your unused package balance carries over.</div>
         <ul>
           <li>2 coaching calls per month (45 min)</li>
           <li>Personalized nutrition plan</li>
@@ -265,15 +281,15 @@
         <a class="btn btn-ghost" href="https://calendly.com/lucehlinger1/coaching-screening-call" target="_blank">Book a free call</a>
       </div>
 
-      <div class="tier featured">
+      <div class="tier featured" data-m="449">
         <span class="badge">Most popular</span>
         <h3>Apex</h3>
         <p class="for">Weekly coaching, with your wearable data guiding the adjustments.</p>
-        <div class="price" data-m="$449" data-a="$374">$449<small>/month</small></div>
-        <div class="billed" data-a="$4,490 billed yearly">&nbsp;</div>
-        <div class="plus">Everything in Toolkit, plus:</div>
+        <div class="price">$449<small>/month</small></div>
+        <div class="billed">Billed monthly</div>
         <ul>
           <li>4 coaching calls per month (60 min)</li>
+          <li>Full nutrition, sleep, and habit coaching</li>
           <li>Wearable data integration (Oura, Whoop, Fitbit, and more)</li>
           <li>Weekly data review and adjustments</li>
           <li>Custom nutrition and supplement guidance</li>
@@ -283,16 +299,15 @@
         <a class="btn btn-primary" href="https://calendly.com/lucehlinger1/coaching-screening-call" target="_blank">Book a free call</a>
       </div>
 
-      <div class="tier">
+      <div class="tier" data-m="1299">
         <h3>Director</h3>
         <p class="for">Fully custom, high-touch coaching for executives and high performers.</p>
-        <div class="price" data-m="$1,299" data-a="$1,083">$1,299<small>/month</small></div>
-        <div class="billed" data-a="$12,990 billed yearly">&nbsp;</div>
-        <div class="plus">Everything in Apex, plus:</div>
+        <div class="price">$1,299<small>/month</small></div>
+        <div class="billed">Billed monthly</div>
         <ul>
-          <li>On-demand coaching access</li>
+          <li>Weekly calls plus on-demand coaching access</li>
+          <li>Advanced biometric analysis from your wearable</li>
           <li>Fully custom nutrition and training plans</li>
-          <li>Advanced biometric analysis</li>
           <li>White-glove onboarding and personalized roadmap</li>
           <li>Quarterly 90-min strategy sessions</li>
           <li>Quarterly in-person assessments (Austin)</li>
@@ -322,7 +337,8 @@
     <div class="faq">
       <details><summary>Do I need an Oura ring or other wearable?</summary><p>No. Plenty of clients don't. If you do wear an Oura, Whoop, or Fitbit, Apex and Director bring that data into your coaching.</p></details>
       <details><summary>Is coaching in person or online?</summary><p>Both. Calls are virtual by default, and Director clients get quarterly in-person assessments in Austin.</p></details>
-      <details><summary>Can I cancel anytime?</summary><p>Yes. Monthly plans cancel with 24 hours' notice and you keep access through the end of your billing period.</p></details>
+      <details><summary>Can I cancel anytime?</summary><p>Monthly plans cancel with 24 hours' notice and you keep access through the end of your billing period. Packages (3, 6, or 12 months) run for their full term.</p></details>
+      <details><summary>Can I upgrade in the middle of a package?</summary><p>Yes. If you start on Toolkit and want more support, move up to Apex anytime. Whatever is left on your package is credited toward the upgrade.</p></details>
       <details><summary>What happens on the free call?</summary><p>45 minutes on your goals, your routine, and where you're stuck. If it's a fit, we'll pick the right plan together.</p></details>
     </div>
   </div>
@@ -350,18 +366,26 @@
 </footer>
 
 <script>
-  const btns=document.querySelectorAll('.toggle button');
-  btns.forEach(b=>b.addEventListener('click',()=>{
-    const mode=b.dataset.mode;
-    btns.forEach(x=>x.classList.toggle('on',x===b));
-    document.querySelectorAll('.price').forEach(p=>{
-      p.innerHTML=(mode==='annual'?p.dataset.a:p.dataset.m)+'<small>/month</small>';
+  const OFF={1:0,3:.10,6:.15,12:.20};
+  const money=n=>'$'+n.toLocaleString('en-US');
+  const planBtns=document.querySelectorAll('.plans button');
+  function setPlan(mo){
+    planBtns.forEach(x=>x.classList.toggle('on',+x.dataset.months===mo));
+    document.querySelectorAll('.tier').forEach(tier=>{
+      const m=+tier.dataset.m, per=Math.round(m*(1-OFF[mo]));
+      const price=tier.querySelector('.price'), billed=tier.querySelector('.billed'), up=tier.querySelector('.upgrade');
+      if(mo===1){
+        price.innerHTML=money(m)+'<small>/month</small>';
+        billed.textContent='Billed monthly';
+      }else{
+        price.innerHTML='<span class="was">'+money(m)+'</span>'+money(per)+'<small>/month</small>';
+        billed.innerHTML=money(per*mo)+' for '+mo+' months<span class="saved">Save '+money((m-per)*mo)+'</span>';
+      }
+      if(up) up.hidden=(mo===1);
     });
-    document.querySelectorAll('.billed').forEach(el=>{
-      el.innerHTML=mode==='annual'?el.dataset.a:'&nbsp;';
-    });
-    document.getElementById('saveNote').textContent=mode==='annual'?'2 months free on every plan':'';
-  }));
+  }
+  planBtns.forEach(b=>b.addEventListener('click',()=>setPlan(+b.dataset.months)));
+  setPlan(6);
 </script>
 </body>
 </html>
